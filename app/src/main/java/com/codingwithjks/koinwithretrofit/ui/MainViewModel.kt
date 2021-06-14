@@ -2,7 +2,7 @@ package com.codingwithjks.koinwithretrofit.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codingwithjks.koinwithretrofit.data.repository.ApiState
+import com.codingwithjks.koinwithretrofit.data.util.ApiState
 import com.codingwithjks.koinwithretrofit.data.repository.MainRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,4 +24,8 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     }
 
     fun setBus(bus_no:String,town:String) = mainRepository.setBus(bus_no,town)
+
+    fun deleteBus(
+        busNo:String
+    ) = mainRepository.deleteBus(busNo)
 }

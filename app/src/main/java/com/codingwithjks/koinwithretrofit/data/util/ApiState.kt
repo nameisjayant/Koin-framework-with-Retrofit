@@ -1,4 +1,4 @@
-package com.codingwithjks.koinwithretrofit.data.repository
+package com.codingwithjks.koinwithretrofit.data.util
 
 import com.codingwithjks.koinwithretrofit.data.Bus
 

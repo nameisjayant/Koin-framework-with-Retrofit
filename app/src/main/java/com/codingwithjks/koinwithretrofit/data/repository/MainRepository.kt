@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import retrofit2.Response
 
 class MainRepository constructor(private val apiService: ApiService) {
 
@@ -15,5 +16,9 @@ class MainRepository constructor(private val apiService: ApiService) {
 
     fun setBus(bus_no: String, towns: String): Flow<Bus> = flow {
         emit(apiService.setBus(bus_no, towns))
+    }.flowOn(Dispatchers.IO)
+
+    fun deleteBus(bus_no: String):Flow<Response<Unit>> = flow {
+        emit(apiService.delete(bus_no))
     }.flowOn(Dispatchers.IO)
 }

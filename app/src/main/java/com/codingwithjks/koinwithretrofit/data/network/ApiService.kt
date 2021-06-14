@@ -1,10 +1,8 @@
 package com.codingwithjks.koinwithretrofit.data.network
 
 import com.codingwithjks.koinwithretrofit.data.Bus
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.Response
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -21,4 +19,9 @@ interface ApiService {
         @Field("bus_no") bus_no: String,
         @Field("towns") towns: String
     ): Bus
+
+    @DELETE("bus/{bus_no}/")
+    suspend fun delete(
+        @Path("bus_no") busNo:String
+    ):Response<Unit>
 }

@@ -5,21 +5,23 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codingwithjks.koinwithretrofit.container.Component
-import com.codingwithjks.koinwithretrofit.data.repository.ApiState
+import com.codingwithjks.koinwithretrofit.data.adapter.BusAdapter
+import com.codingwithjks.koinwithretrofit.data.util.ApiState
+import com.codingwithjks.koinwithretrofit.data.util.Listener
+import com.codingwithjks.koinwithretrofit.data.util.showMsg
 import com.codingwithjks.koinwithretrofit.databinding.ActivityMainBinding
-import com.codingwithjks.koinwithretrofit.ui.MainViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import org.koin.core.component.KoinApiExtension
 
 @KoinApiExtension
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),Listener {
     private lateinit var binding: ActivityMainBinding
+
     private val component = Component()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         initRecyclerview()
         getBus()
         setData()
+        BusAdapter(this)
     }
 
     private fun setData() {
@@ -97,6 +100,17 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    override fun onClickDelete(position: Int, busNo: String) {
+        lifecycleScope.launchWhenStarted {
+            component.mainViewModel.deleteBus(busNo).catch {e->
+                Log.d("main", "${e.message}")
+            }.collect {
+                showMsg("deleted successfully..")
+                getBus()
             }
         }
     }
